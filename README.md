@@ -1,8 +1,12 @@
 ### GithubAction Terraform Wrapper
 #
 #### Examples:
-##### main.tf
+##### env/terragrunt.hcl
 ```
+generate "s3_backend" {
+  path      = "provider.tf"
+  if_exists = "overwrite_terragrunt"
+  contents = <<EOF
 terraform {
   required_providers {
     yandex = {
@@ -10,26 +14,30 @@ terraform {
     }
   }
   required_version = ">= 0.13"
-
   backend "s3" {
     endpoint                    = "storage.yandexcloud.net"
     bucket                      = "muffs-tf-state"
     region                      = "ru-central1"
-    key                         = "state/terraform.tfstate"
+    key                         = "state/test/terraform.tfstate"
     skip_region_validation      = true
     skip_credentials_validation = true
   }
 }
-
-
 variable "yandex_token" {}
-
-
 provider "yandex" {
   token     = var.yandex_token
   cloud_id  = "fake-cloud-id"
   folder_id = "fake-folder-id"
   zone      = "ru-central1-a"
+}
+EOF
+}
+```
+#
+##### env/infra/terragrunt.hcl
+```
+include "root" {
+  path = find_in_parent_folders()
 }
 ```
 #
@@ -57,6 +65,7 @@ jobs:
         env:
           # Defaults to latest terraform release
           TERRAFORM_VERSION: '1.3.5'
+          TERRAGRUNT_VERSION: 'v0.42.1'
         with:
           tg_command: 'install'
           
