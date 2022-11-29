@@ -1,0 +1,32 @@
+name: Terragrunt Github Wrapper
+description: Wrapper for terragrunt
+branding:
+  icon: 'play-circle'
+  color: 'blue'
+
+inputs:
+  tg_command:
+    description: tg sub command
+    required: true
+  tg_path:
+    description: tf dir
+    required: false
+    default: "."
+  git_pattern:
+    description: git add pattern
+    required: false
+    default: "."
+
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: echo "RUN_TIME=`date +'%Y-%m-%d-%M:%S.%N'`" >> $GITHUB_ENV
+    - shell: bash
+      run: ${{ github.action_path }}/tg.sh ${{ inputs.tg_command }} ${{ inputs.tg_path }}
+    - if: inputs.tg_command == 'fmt'
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        file_pattern: ${{ inputs.git_pattern }}
+        commit_message: "terraform ${{ inputs.tg_command }} at ${{ env.RUN_TIME }}"
