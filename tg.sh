@@ -36,6 +36,7 @@ case $1 in
         echo -e "Downloading terragrunt\n"        
         echo "${HOME}/.local/bin" >> $GITHUB_PATH
         curl -Ls "${TERRAFORM_URL}" -o "${HOME}/.local/bin/terragrunt"
+        chmod +x "${HOME}/.local/bin/terragrunt"
         echo -e "\nInstalled terragrunt:"
         terragrunt version
     fi    
