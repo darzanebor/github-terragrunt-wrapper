@@ -61,7 +61,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Terraform install
-        uses: darzanebor/github-terragrunt-wrapper@v0.0.1
+        uses: darzanebor/github-terragrunt-wrapper@v0.0.1a
         env:
           # Defaults to latest terraform release
           TERRAFORM_VERSION: '1.3.5'
@@ -70,7 +70,7 @@ jobs:
           tg_command: 'install'
           
       - name: Terraform fmt
-        uses: darzanebor/github-terragrunt-wrapper@v0.0.1
+        uses: darzanebor/github-terragrunt-wrapper@v0.0.1a
         env:
           GITHUB_TOKEN: "${{ secrets.OAUTH_TOKEN }}"        
         with:
@@ -78,7 +78,7 @@ jobs:
           tg_path: "${{ env.tg_working_dir }}"
 
       - name: Terraform init
-        uses: darzanebor/github-terragrunt-wrapper@v0.0.1
+        uses: darzanebor/github-terragrunt-wrapper@v0.0.1a
         env:
           tg_VAR_yandex_token: "${{ secrets.YANDEX_TOKEN }}"
           AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
@@ -88,7 +88,7 @@ jobs:
           tg_path: "${{ env.tg_working_dir }}"
 
       - name: Terraform plan
-        uses: darzanebor/github-terragrunt-wrapper@v0.0.1
+        uses: darzanebor/github-terragrunt-wrapper@v0.0.1a
         env:
           tg_VAR_yandex_token: "${{ secrets.YANDEX_TOKEN }}"
           AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
@@ -98,7 +98,7 @@ jobs:
           tg_path: "${{ env.tg_working_dir }}"
 
       - name: Terraform apply
-        uses: darzanebor/github-terragrunt-wrapper@v0.0.1
+        uses: darzanebor/github-terragrunt-wrapper@v0.0.1a
         env:
           tg_VAR_yandex_token: "${{ secrets.YANDEX_TOKEN }}"
           AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
