@@ -54,7 +54,7 @@ env:
 
 jobs:
   check:
-    name: Terraform IaC
+    name: Terragrunt IaC
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
