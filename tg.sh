@@ -11,9 +11,9 @@ fi
 
 # Get latest terraform version and build url if custom version is not set.
 if [[ -z "${TERRAGRUNT_VERSION}" ]]; then
-  TERRAGRUNT_URL="https://github.com/gruntwork-io/terragrunt/releases/download/$(curl -s https://api.github.com/repos/gruntwork-io/terragrunt/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')/terragrunt_linux_386"
+  TERRAGRUNT_URL="https://github.com/gruntwork-io/terragrunt/releases/download/$(curl -s https://api.github.com/repos/gruntwork-io/terragrunt/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')/terragrunt_linux_amd64"
 else
-  TERRAGRUNT_URL="https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_386"
+  TERRAGRUNT_URL="https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_amd64"
 fi
 
 # Wrap around terraform
