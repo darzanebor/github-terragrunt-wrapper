@@ -43,16 +43,16 @@ case $1 in
     fi    
     ;;
   "init" )
-    terraform -chdir=$2 init -input=false
+    terragrunt init -chdir=$2 -input=false
     ;;
   "plan" )
-    terraform -chdir=$2 plan -input=false
+    terragrunt plan -chdir=$2 -input=false
     ;;
   "apply" )
-    terraform -chdir=$2 apply -auto-approve
+    terragrunt apply -chdir=$2 -auto-approve
     ;;    
   "fmt" )
-    terraform -chdir=$2 fmt -recursive
+    terragrunt fmt -chdir=$2 -recursive
     ;;
   * )
     echo -e "${HELP_MESSAGE}\n"
