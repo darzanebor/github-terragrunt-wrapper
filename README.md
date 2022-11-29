@@ -18,7 +18,7 @@ terraform {
     endpoint                    = "storage.yandexcloud.net"
     bucket                      = "muffs-tf-state"
     region                      = "ru-central1"
-    key                         = "state/test/terraform.tfstate"
+    key                         = "demo/${path_relative_to_include()}/terraform.tfstate"
     skip_region_validation      = true
     skip_credentials_validation = true
   }
