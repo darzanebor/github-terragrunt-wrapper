@@ -1,4 +1,4 @@
-### GithubAction Terraform Wrapper
+### GithubAction Terragrunt Wrapper
 #
 #### Examples:
 ##### env/terragrunt.hcl
