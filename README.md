@@ -65,6 +65,7 @@ jobs:
         env:
           # Defaults to latest terraform release
           TERRAFORM_VERSION: '1.3.5'
+          # Defaults to latest terragrunt release
           TERRAGRUNT_VERSION: 'v0.42.1'
         with:
           tg_command: 'install'
