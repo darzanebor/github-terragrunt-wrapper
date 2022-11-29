@@ -50,17 +50,17 @@ on:
   workflow_dispatch:
 
 env:
-  tg_working_dir: './tf'
+  tg_working_dir: './env/infra'
 
 jobs:
   check:
-    name: Terragrunt IaC
+    name: Terraform IaC
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Terraform install
+      - name: Terragrunt install
         uses: darzanebor/github-terragrunt-wrapper@v0.0.1a
         env:
           # Defaults to latest terraform release
@@ -69,8 +69,18 @@ jobs:
           TERRAGRUNT_VERSION: 'v0.42.1'
         with:
           tg_command: 'install'
-          
-      - name: Terraform fmt
+
+      - name: Terragrunt init
+        uses: darzanebor/github-terragrunt-wrapper@v0.0.1a
+        env:
+          TF_VAR_yandex_token: "${{ secrets.YANDEX_TOKEN }}"
+          AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        with:
+          tg_command: 'init'
+          tg_path: "${{ env.tg_working_dir }}"
+
+      - name: Terragrunt fmt
         uses: darzanebor/github-terragrunt-wrapper@v0.0.1a
         env:
           GITHUB_TOKEN: "${{ secrets.OAUTH_TOKEN }}"        
@@ -78,30 +88,20 @@ jobs:
           tg_command: 'fmt'
           tg_path: "${{ env.tg_working_dir }}"
 
-      - name: Terraform init
+      - name: Terragrunt plan
         uses: darzanebor/github-terragrunt-wrapper@v0.0.1a
         env:
-          tg_VAR_yandex_token: "${{ secrets.YANDEX_TOKEN }}"
-          AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-          AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-        with:
-          tg_command: 'init'
-          tg_path: "${{ env.tg_working_dir }}"
-
-      - name: Terraform plan
-        uses: darzanebor/github-terragrunt-wrapper@v0.0.1a
-        env:
-          tg_VAR_yandex_token: "${{ secrets.YANDEX_TOKEN }}"
+          TF_VAR_yandex_token: "${{ secrets.YANDEX_TOKEN }}"
           AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
           AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
         with:
           tg_command: 'plan'
           tg_path: "${{ env.tg_working_dir }}"
 
-      - name: Terraform apply
+      - name: Terragrunt apply
         uses: darzanebor/github-terragrunt-wrapper@v0.0.1a
         env:
-          tg_VAR_yandex_token: "${{ secrets.YANDEX_TOKEN }}"
+          TF_VAR_yandex_token: "${{ secrets.YANDEX_TOKEN }}"
           AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
           AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
         with:
