@@ -35,8 +35,9 @@ case $1 in
     if [ ! -f "${HOME}/.local/bin/terragrunt" ]; then
         echo -e "Downloading terragrunt\n"        
         echo "${HOME}/.local/bin" >> $GITHUB_PATH
-        curl -Ls "${TERRAFORM_URL}" -o "${HOME}/.local/bin/terragrunt"
-        chmod +x "${HOME}/.local/bin/terragrunt"
+        curl -Ls "${TERRAFORM_URL}" -o terragrunt
+        chmod +x terragrunt
+        mv terragrunt "${HOME}/.local/bin/"
         echo -e "\nInstalled terragrunt:"
         terragrunt version
     fi    
