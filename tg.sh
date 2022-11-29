@@ -39,7 +39,7 @@ case $1 in
         chmod u+x terragrunt
         mv terragrunt "${HOME}/.local/bin/"
         echo -e "\nInstalled terragrunt:"
-        terragrunt version
+        terragrunt -v
     fi    
     ;;
   "init" )
