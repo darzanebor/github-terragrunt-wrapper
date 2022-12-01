@@ -15,7 +15,7 @@ inputs:
   git_pattern:
     description: git add pattern
     required: false
-    default: "."
+    default: "*"
 
 
 runs:
