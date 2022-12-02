@@ -16,7 +16,7 @@ else
   TERRAGRUNT_URL="https://github.com/gruntwork-io/terragrunt/releases/download/${TERRAGRUNT_VERSION}/terragrunt_linux_amd64"
 fi
 
-# Wrap around terraform
+# Wrap around terragrunt
 case $1 in
   "install" )
     if [ ! -d "${HOME}/.local/bin" ];then
