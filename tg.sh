@@ -24,7 +24,7 @@ case $1 in
     fi
     if [ ! -f "${HOME}/.local/bin/terraform" ]; then
         echo -e "Downloading terraform\n"        
-        echo "${HOME}/.local/bin" >> $GITHUB_PATH
+        echo "${HOME}/.local/bin" >> "$GITHUB_PATH"
         curl -Ls "${TERRAFORM_URL}" -o terraform.zip
         unzip terraform.zip
         mv ./terraform "${HOME}/.local/bin/"
@@ -34,7 +34,7 @@ case $1 in
     fi
     if [ ! -f "${HOME}/.local/bin/terragrunt" ]; then
         echo -e "Downloading terragrunt\n"        
-        echo "${HOME}/.local/bin" >> $GITHUB_PATH
+        echo "${HOME}/.local/bin" >> "$GITHUB_PATH"
         curl -Ls "${TERRAGRUNT_URL}" -o terragrunt
         chmod u+x terragrunt
         mv terragrunt "${HOME}/.local/bin/"
@@ -43,16 +43,16 @@ case $1 in
     fi    
     ;;
   "init" )
-    terragrunt init --terragrunt-working-dir=$2 -input=false
+    terragrunt init --terragrunt-working-dir="$2" -input=false
     ;;
   "plan" )
-    terragrunt plan --terragrunt-working-dir=$2 -input=false
+    terragrunt plan --terragrunt-working-dir="$2" -input=false
     ;;
   "apply" )
-    terragrunt apply --terragrunt-working-dir=$2 -auto-approve
+    terragrunt apply --terragrunt-working-dir="$2" -auto-approve
     ;;    
   "fmt" )
-    terragrunt fmt --terragrunt-working-dir=$2 -recursive
+    terragrunt fmt --terragrunt-working-dir="$2" -recursive
     ;;
   * )
     echo -e "${HELP_MESSAGE}\n"
