@@ -1,0 +1,15 @@
+on:
+  push:
+
+jobs:
+  check:
+    name: githubaction check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Terragrunt install
+        uses: darzanebor/github-terragrunt-wrapper@v0.0.2
+        with:
+          tg_command: 'install'
