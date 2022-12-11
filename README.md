@@ -50,7 +50,15 @@ on:
   workflow_dispatch:
 
 env:
-  tg_working_dir: './env/infra'
+  tg_working_dir: 'env/infra'
+  GITHUB_TOKEN: "${{ secrets.OAUTH_TOKEN }}"
+  TF_VAR_yandex_token: "${{ secrets.YANDEX_TOKEN }}"
+  AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+  AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"  
+  # Defaults to latest terraform release
+  TERRAFORM_VERSION: '1.3.5'
+  # Defaults to latest terragrunt release
+  TERRAGRUNT_VERSION: 'v0.42.1'  
 
 jobs:
   check:
@@ -62,48 +70,24 @@ jobs:
 
       - name: Terragrunt install
         uses: darzanebor/github-terragrunt-wrapper@v0.0.3
-        env:
-          # Defaults to latest terraform release
-          TERRAFORM_VERSION: '1.3.5'
-          # Defaults to latest terragrunt release
-          TERRAGRUNT_VERSION: 'v0.42.1'
         with:
           tg_command: 'install'
 
-      - name: Terragrunt init
+      - name: Terragrunt init/fmt
         uses: darzanebor/github-terragrunt-wrapper@v0.0.3
-        env:
-          TF_VAR_yandex_token: "${{ secrets.YANDEX_TOKEN }}"
-          AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-          AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-        with:
-          tg_command: 'init'
-          tg_path: "${{ env.tg_working_dir }}"
-
-      - name: Terragrunt fmt
-        uses: darzanebor/github-terragrunt-wrapper@v0.0.3
-        env:
-          GITHUB_TOKEN: "${{ secrets.OAUTH_TOKEN }}"        
         with:
           tg_command: 'fmt'
+          git_pattern: '(:!.terraform.lock.hcl)(:!.terraform)'
           tg_path: "${{ env.tg_working_dir }}"
 
       - name: Terragrunt plan
         uses: darzanebor/github-terragrunt-wrapper@v0.0.3
-        env:
-          TF_VAR_yandex_token: "${{ secrets.YANDEX_TOKEN }}"
-          AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-          AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
         with:
           tg_command: 'plan'
           tg_path: "${{ env.tg_working_dir }}"
 
       - name: Terragrunt apply
         uses: darzanebor/github-terragrunt-wrapper@v0.0.3
-        env:
-          TF_VAR_yandex_token: "${{ secrets.YANDEX_TOKEN }}"
-          AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-          AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
         with:
           tg_command: 'apply'
           tg_path: "${{ env.tg_working_dir }}"
