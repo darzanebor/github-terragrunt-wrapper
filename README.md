@@ -51,6 +51,7 @@ on:
 
 env:
   tg_working_dir: 'env/infra'
+  # GITHUB TOKEN USED for fmt to upload formated code
   GITHUB_TOKEN: "${{ secrets.OAUTH_TOKEN }}"
   TF_VAR_yandex_token: "${{ secrets.YANDEX_TOKEN }}"
   AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
